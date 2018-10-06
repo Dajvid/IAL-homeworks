@@ -1,32 +1,32 @@
 
 /****************************** c203-test.c ************************************
- * Pøedmìt: Algoritmy (IAL) - FIT VUT v Brnì
- * Základní testy pro pøíklad c203.c (Fronta znakù v poli)
- * Vytvoøil: Václav Topinka, záøí 2005
- * Upravil: Bohuslav Køena, záøí 2012
+ * PÅ™edmÄ›t: Algoritmy (IAL) - FIT VUT v BrnÄ›
+ * ZÃ¡kladnÃ­ testy pro pÅ™Ã­klad c203.c (Fronta znakÅ¯ v poli)
+ * VytvoÅ™il: VÃ¡clav Topinka, zÃ¡Å™Ã­ 2005
+ * Upravil: Bohuslav KÅ™ena, zÃ¡Å™Ã­ 2012
  *******************************************************************************
- * V tomto pøíkladu jsme pou¾ili trochu více angliètinu ne¾ obvykle.
- * Máme pro to dva dùvody:
+ * V tomto pÅ™Ã­kladu jsme pouÅ¾ili trochu vÃ­ce angliÄtinu neÅ¾ obvykle.
+ * MÃ¡me pro to dva dÅ¯vody:
  *  
- * 1) Angliètina je druhá mateø¹tina informatika! Bez ní se jako informatici
- * (a v dne¹ní dobì nejenom jako informatici) asi jenom tì¾ko obejdete.
- * Domácí úlohy (alespoò z èásti) v angliètinì by vám proto mohli pomoci pøi
- * za¾ití tohoto jazyka. Pojmenovávat identifikátory anglickımi termíny je
- * velice dobrı zvyk - nikdy nevíte, zda Vá¹ kód nebude pozdìji èíst nebo
- * dokonce upravovat nìkdo, kdo èesky nerozumí. Stejnì tak je u¾iteèné psát
- * anglictky i komentáøe.
+ * 1) AngliÄtina je druhÃ¡ mateÅ™Å¡tina informatika! Bez nÃ­ se jako informatici
+ * (a v dneÅ¡nÃ­ dobÄ› nejenom jako informatici) asi jenom tÄ›Å¾ko obejdete.
+ * DomÃ¡cÃ­ Ãºlohy (alespoÅˆ z ÄÃ¡sti) v angliÄtinÄ› by vÃ¡m proto mohli pomoci pÅ™i
+ * zaÅ¾itÃ­ tohoto jazyka. PojmenovÃ¡vat identifikÃ¡tory anglickÃ½mi termÃ­ny je
+ * velice dobrÃ½ zvyk - nikdy nevÃ­te, zda VÃ¡Å¡ kÃ³d nebude pozdÄ›ji ÄÃ­st nebo
+ * dokonce upravovat nÄ›kdo, kdo Äesky nerozumÃ­. StejnÄ› tak je uÅ¾iteÄnÃ© psÃ¡t
+ * anglictky i komentÃ¡Å™e.
  *  
- * 2) Na FIT pøijí¾dìjí zahranièní studenti v rámci projektù ERASMUS/SOCRATES
- * Aby se podmínky jejich studia co nejvíce blí¾ily podmínkám, které mají
- * studenti studující v èe¹tinì, mìli by zahranièní studenti dìlat i stejné
- * domácí úlohy. Jen¾e to vy¾aduje mít domácí úlohy pøipraveny v angliètinì.
- * A udr¾ovat konzistenci dvou verzí domácích úloh (èeskıch a anglickıch) 
- * je znaènì pracné. Pøevedení domácích úloh do angliètiny by tento problém
- * elegatnì vyøe¹ilo.
+ * 2) Na FIT pÅ™ijÃ­Å¾dÄ›jÃ­ zahraniÄnÃ­ studenti v rÃ¡mci projektÅ¯ ERASMUS/SOCRATES
+ * Aby se podmÃ­nky jejich studia co nejvÃ­ce blÃ­Å¾ily podmÃ­nkÃ¡m, kterÃ© majÃ­
+ * studenti studujÃ­cÃ­ v ÄeÅ¡tinÄ›, mÄ›li by zahraniÄnÃ­ studenti dÄ›lat i stejnÃ©
+ * domÃ¡cÃ­ Ãºlohy. JenÅ¾e to vyÅ¾aduje mÃ­t domÃ¡cÃ­ Ãºlohy pÅ™ipraveny v angliÄtinÄ›.
+ * A udrÅ¾ovat konzistenci dvou verzÃ­ domÃ¡cÃ­ch Ãºloh (ÄeskÃ½ch a anglickÃ½ch) 
+ * je znaÄnÄ› pracnÃ©. PÅ™evedenÃ­ domÃ¡cÃ­ch Ãºloh do angliÄtiny by tento problÃ©m
+ * elegatnÄ› vyÅ™eÅ¡ilo.
  * 
- * Samotné zadání nakonec zùstalo i pro tento pøíklad v èe¹tinì, aby se nikdo
- * nemohl cítit po¹kozen tím, ¾e zadání nerozumìl právì kvùli pou¾ití
- * nemateøského jazyka.
+ * SamotnÃ© zadÃ¡nÃ­ nakonec zÅ¯stalo i pro tento pÅ™Ã­klad v ÄeÅ¡tinÄ›, aby se nikdo
+ * nemohl cÃ­tit poÅ¡kozen tÃ­m, Å¾e zadÃ¡nÃ­ nerozumÄ›l prÃ¡vÄ› kvÅ¯li pouÅ¾itÃ­
+ * nemateÅ™skÃ©ho jazyka.
  ******************************************************************************/
 
 #include "c203.h"
