@@ -66,12 +66,6 @@ void InitList (tList *L) {
 ** seznamem, a proto tuto možnost neošetřujte. Vždy předpokládejte,
 ** že neinicializované proměnné mají nedefinovanou hodnotu.
 **/
-	L = malloc(sizeof(*L));
-    if (!L) {
-        Error();
-        return;
-    }
-
     L->First = NULL;
     L->Act = NULL;
 }
@@ -83,8 +77,8 @@ void DisposeList (tList *L) {
 ** uvolněna voláním operace free.
 ***/
     tElemPtr next = NULL;
-    tElemPtr current = L->First->ptr;
-    
+    tElemPtr current = L->First;
+
     while (current) {
         next = current->ptr;
         free(current);
@@ -130,7 +124,7 @@ void CopyFirst (tList *L, int *val) {
     if (!L->First) {
         Error();
         return;
-    }	
+    }
 
     *val = L->First->data;
 }
@@ -152,10 +146,10 @@ void DeleteFirst (tList *L) {
     tElemPtr tmp = L->First->ptr;
     free(L->First);
     L->First = tmp;
-}	
+}
 
 void PostDelete (tList *L) {
-/* 
+/*
 ** Zruší prvek seznamu L za aktivním prvkem a uvolní jím používanou paměť.
 ** Pokud není seznam L aktivní nebo pokud je aktivní poslední prvek seznamu L,
 ** nic se neděje.
@@ -163,7 +157,7 @@ void PostDelete (tList *L) {
     if (!L->Act || !L->Act->ptr) {
         return;
     }
-	
+
     tElemPtr toDelete = L->Act->ptr;
     tElemPtr tmp = toDelete->ptr;
 
@@ -187,7 +181,7 @@ void PostInsert (tList *L, int val) {
         Error();
         return;
     }
-	
+
     new->data = val;
     new->ptr = L->Act->ptr;
     L->Act->ptr = new;
@@ -214,7 +208,7 @@ void Actualize (tList *L, int val) {
     if (!L->Act) {
         return;
     }
-	
+
     L->Act->data = val;
 }
 
@@ -227,17 +221,17 @@ void Succ (tList *L) {
 	if(!L->Act) {
         return;
     }
-	
+
     L->Act = L->Act->ptr;
 }
 
 int Active (tList *L) {
 /*
 ** Je-li seznam L aktivní, vrací nenulovou hodnotu, jinak vrací 0.
-** Tuto funkci je vhodné implementovat jedním příkazem return. 
+** Tuto funkci je vhodné implementovat jedním příkazem return.
 **/
-	
-    return (!L->Act);
+
+    return (L->Act != NULL);
 }
 
 /* Konec c201.c */
