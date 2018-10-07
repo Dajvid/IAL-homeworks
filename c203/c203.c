@@ -93,7 +93,7 @@ int nextIndex (int index) {
 
 int queueEmpty (const tQueue* q) {
 /*
-** Vrací nenulovou hodnotu, pokud je frona prázdná, jinak vrací hodnotu 0.
+** Vrací nenulovou hodnotu, pokud je frona prázdná, jinak vrací hodnotu 0. 
 ** Funkci je vhodné implementovat jedním příkazem return.
 */
 	return (q->f_index == q->b_index);
@@ -101,7 +101,7 @@ int queueEmpty (const tQueue* q) {
 
 int queueFull (const tQueue* q) {
 /*
-** Vrací nenulovou hodnotu, je-li fronta plná, jinak vrací hodnotu 0.
+** Vrací nenulovou hodnotu, je-li fronta plná, jinak vrací hodnotu 0. 
 ** Funkci je vhodné implementovat jedním příkazem return
 ** s využitím pomocné funkce nextIndex.
 */

@@ -146,10 +146,10 @@ void DeleteFirst (tList *L) {
     tElemPtr tmp = L->First->ptr;
     free(L->First);
     L->First = tmp;
-}
+}	
 
 void PostDelete (tList *L) {
-/*
+/* 
 ** Zruší prvek seznamu L za aktivním prvkem a uvolní jím používanou paměť.
 ** Pokud není seznam L aktivní nebo pokud je aktivní poslední prvek seznamu L,
 ** nic se neděje.
@@ -228,9 +228,8 @@ void Succ (tList *L) {
 int Active (tList *L) {
 /*
 ** Je-li seznam L aktivní, vrací nenulovou hodnotu, jinak vrací 0.
-** Tuto funkci je vhodné implementovat jedním příkazem return.
+** Tuto funkci je vhodné implementovat jedním příkazem return. 
 **/
-
     return (L->Act != NULL);
 }
 

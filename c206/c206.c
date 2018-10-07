@@ -41,7 +41,7 @@
 ** implementovaných v rámci tohoto příkladu, není-li u funkce
 ** explicitně uvedeno něco jiného.
 **
-** Nemusíte ošetřovat situaci, kdy místo legálního ukazatele na seznam
+** Nemusíte ošetřovat situaci, kdy místo legálního ukazatele na seznam 
 ** předá někdo jako parametr hodnotu NULL.
 **
 ** Svou implementaci vhodně komentujte!
@@ -61,7 +61,7 @@ void DLError() {
 /*
 ** Vytiskne upozornění na to, že došlo k chybě.
 ** Tato funkce bude volána z některých dále implementovaných operací.
-**/
+**/	
     printf ("*ERROR* The program has performed an illegal operation.\n");
     errflg = TRUE;             /* globální proměnná -- příznak ošetření chyby */
     return;
@@ -84,7 +84,7 @@ void DLDisposeList (tDLList *L) {
 /*
 ** Zruší všechny prvky seznamu L a uvede seznam do stavu, v jakém
 ** se nacházel po inicializaci. Rušené prvky seznamu budou korektně
-** uvolněny voláním operace free.
+** uvolněny voláním operace free. 
 **/
     tDLElemPtr next = NULL;
     tDLElemPtr current = L->First;
@@ -130,7 +130,7 @@ void DLInsertLast(tDLList *L, int val) {
 ** Vloží nový prvek na konec seznamu L (symetrická operace k DLInsertFirst).
 ** V případě, že není dostatek paměti pro nový prvek při operaci malloc,
 ** volá funkci DLError().
-**/
+**/ 	
     tDLElemPtr new = malloc(sizeof(*new));
     if (!new) {
         DLError();
@@ -165,7 +165,6 @@ void DLLast (tDLList *L) {
 ** Funkci implementujte jako jediný příkaz (nepočítáme-li return),
 ** aniž byste testovali, zda je seznam L prázdný.
 **/
-
     L->Act = L->Last;
 }
 
@@ -197,7 +196,7 @@ void DLCopyLast (tDLList *L, int *val) {
 
 void DLDeleteFirst (tDLList *L) {
 /*
-** Zruší první prvek seznamu L. Pokud byl první prvek aktivní, aktivita
+** Zruší první prvek seznamu L. Pokud byl první prvek aktivní, aktivita 
 ** se ztrácí. Pokud byl seznam L prázdný, nic se neděje.
 **/
     if (L->First == L->Act) {
@@ -210,13 +209,13 @@ void DLDeleteFirst (tDLList *L) {
     L->First->lptr = NULL;
 
     free(tmp);
-}
+}	
 
 void DLDeleteLast (tDLList *L) {
 /*
 ** Zruší poslední prvek seznamu L. Pokud byl poslední prvek aktivní,
 ** aktivita seznamu se ztrácí. Pokud byl seznam L prázdný, nic se neděje.
-**/
+**/ 
     if (L->Last == L->Act) {
         L->Act = NULL;
     }
