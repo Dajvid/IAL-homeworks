@@ -199,14 +199,24 @@ void DLDeleteFirst (tDLList *L) {
 ** Zruší první prvek seznamu L. Pokud byl první prvek aktivní, aktivita 
 ** se ztrácí. Pokud byl seznam L prázdný, nic se neděje.
 **/
+    if (!L->First) {
+        return;
+    }
+
     if (L->First == L->Act) {
         L->Act = NULL;
+    }
+
+    if (L->First == L->Last) {
+        L->Last = NULL;
     }
 
     tDLElemPtr tmp = L->First;
     L->First = tmp->rptr;
 
-    L->First->lptr = NULL;
+    if (L->First) {
+        L->First->lptr = NULL;
+    }
 
     free(tmp);
 }	
@@ -216,14 +226,24 @@ void DLDeleteLast (tDLList *L) {
 ** Zruší poslední prvek seznamu L. Pokud byl poslední prvek aktivní,
 ** aktivita seznamu se ztrácí. Pokud byl seznam L prázdný, nic se neděje.
 **/ 
+    if (!L->Last) {
+        return;
+    }
+
     if (L->Last == L->Act) {
         L->Act = NULL;
+    }
+
+    if (L->First == L->Last) {
+        L->First = NULL;
     }
 
     tDLElemPtr tmp = L->Last;
     L->Last = tmp->lptr;
 
-    L->Last->rptr = NULL;
+    if (L->Last) {
+        L->Last->rptr = NULL;
+    }
 
     free(tmp);
 }
@@ -240,6 +260,14 @@ void DLPostDelete (tDLList *L) {
 
     tDLElemPtr tmp = L->Act->rptr;
     L->Act->rptr = tmp->rptr;
+
+    if (tmp == L->First) {
+        L->First = tmp->rptr;
+    }
+
+    if (tmp == L->Last) {
+        L->Last = tmp->lptr;
+    }
 
     if (tmp->rptr) {
         tmp->rptr->lptr = tmp->lptr;
@@ -263,7 +291,9 @@ void DLPreDelete (tDLList *L) {
 
     if (tmp == L->First) {
         L->First = tmp->rptr;
-    } else if (tmp == L->Last) {
+    } 
+        
+    if (tmp == L->Last) {
         L->Last = tmp->lptr;
     }
 
@@ -295,7 +325,14 @@ void DLPostInsert (tDLList *L, int val) {
     new->lptr = L->Act;
     new->rptr = L->Act->rptr;
 
-    L->Act->rptr->lptr = new;
+    if (L->Act->rptr) {
+        L->Act->rptr->lptr = new;
+    }
+
+    if (L->Act == L->Last) {
+        L->Last = new;
+    }
+
     L->Act->rptr = new;
 }
 
@@ -320,7 +357,14 @@ void DLPreInsert (tDLList *L, int val) {
     new->lptr = L->Act->lptr;
     new->rptr = L->Act;
 
-    L->Act->lptr->rptr = new;
+    if (L->Act->lptr) {
+        L->Act->lptr->rptr = new;
+    }
+
+    if (L->Act == L->First) {
+        L->First = new;
+    }
+
     L->Act->lptr = new;
 }
 
