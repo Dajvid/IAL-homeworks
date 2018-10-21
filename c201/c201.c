@@ -79,12 +79,14 @@ void DisposeList (tList *L) {
     tElemPtr next = NULL;
     tElemPtr current = L->First;
 
+    /* free all elements */
     while (current) {
         next = current->ptr;
         free(current);
         current = next;
     }
 
+    /* set init values */
     L->Act = NULL;
     L->First = NULL;
 }
@@ -95,6 +97,7 @@ void InsertFirst (tList *L, int val) {
 ** V případě, že není dostatek paměti pro nový prvek při operaci malloc,
 ** volá funkci Error().
 **/
+    /* allocate new element */
     tElemPtr old = (L->First) ? L->First : NULL;
     tElemPtr new = malloc(sizeof(*new));
     if (!new) {
@@ -102,6 +105,7 @@ void InsertFirst (tList *L, int val) {
         return;
     }
 
+    /* add element to list */
     L->First = new;
     new->ptr = old;
     new->data = val;
@@ -121,11 +125,13 @@ void CopyFirst (tList *L, int *val) {
 ** Prostřednictvím parametru val vrátí hodnotu prvního prvku seznamu L.
 ** Pokud je seznam L prázdný, volá funkci Error().
 **/
+    /* error on empty list */
     if (!L->First) {
         Error();
         return;
     }
 
+    /* set return value */
     *val = L->First->data;
 }
 
@@ -143,6 +149,7 @@ void DeleteFirst (tList *L) {
         L->Act = NULL;
     }
 
+    /* free first element and connect list properly */
     tElemPtr tmp = L->First->ptr;
     free(L->First);
     L->First = tmp;
@@ -161,6 +168,7 @@ void PostDelete (tList *L) {
     tElemPtr toDelete = L->Act->ptr;
     tElemPtr tmp = toDelete->ptr;
 
+    /* delete element and connect list properly*/
     free(toDelete);
     L->Act->ptr = tmp;
 }
@@ -176,12 +184,14 @@ void PostInsert (tList *L, int val) {
         return;
     }
 
+    /* allocate new element */
     tElemPtr new = malloc(sizeof(*L));
     if (!new) {
         Error();
         return;
     }
 
+    /* set value and connect list properly */
     new->data = val;
     new->ptr = L->Act->ptr;
     L->Act->ptr = new;

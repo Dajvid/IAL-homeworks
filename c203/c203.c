@@ -75,8 +75,10 @@ void queueInit (tQueue* q) {
 ** V případě, že funkce dostane jako parametr q == NULL, volejte funkci
 ** queueError(QERR_INIT).
 */
+	/* set init values */
 	q->b_index = 0;
 	q->f_index = 0;
+	/* every value in array is supposed to be initialized to '*' */
 	for (int i = 0; i < QUEUE_SIZE; i++) {
 		q->arr[i] = '*';
 	}

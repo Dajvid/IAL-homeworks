@@ -75,6 +75,7 @@ void DLInitList (tDLList *L) {
 ** seznamem, a proto tuto možnost neošetřujte. Vždy předpokládejte,
 ** že neinicializované proměnné mají nedefinovanou hodnotu.
 **/
+    /* set init values */
     L->Act = NULL;
     L->First = NULL;
     L->Last = NULL;
@@ -89,12 +90,14 @@ void DLDisposeList (tDLList *L) {
     tDLElemPtr next = NULL;
     tDLElemPtr current = L->First;
 
+    /* free all elements */
     while (current) {
         next = current->rptr;
         free(current);
         current = next;
     }
 
+    /* set init values */
     L->Act = NULL;
     L->First = NULL;
     L->Last = NULL;
@@ -106,12 +109,14 @@ void DLInsertFirst (tDLList *L, int val) {
 ** V případě, že není dostatek paměti pro nový prvek při operaci malloc,
 ** volá funkci DLError().
 **/
+    /* allocate new element */
     tDLElemPtr new = malloc(sizeof(*new));
     if (!new) {
         DLError();
         return;
     }
 
+    /* connect list properly */
     new->data = val;
     new->lptr = NULL;
     new->rptr = L->First;
@@ -131,12 +136,14 @@ void DLInsertLast(tDLList *L, int val) {
 ** V případě, že není dostatek paměti pro nový prvek při operaci malloc,
 ** volá funkci DLError().
 **/ 	
+    /* allocate new element */
     tDLElemPtr new = malloc(sizeof(*new));
     if (!new) {
         DLError();
         return;
     }
 
+    /* connect list properly */
     new->data = val;
     new->lptr = L->Last;
     new->rptr = NULL;
@@ -199,18 +206,22 @@ void DLDeleteFirst (tDLList *L) {
 ** Zruší první prvek seznamu L. Pokud byl první prvek aktivní, aktivita 
 ** se ztrácí. Pokud byl seznam L prázdný, nic se neděje.
 **/
+    /* return on empty list */
     if (!L->First) {
         return;
     }
 
+    /* if first element is active element, delete activity */
     if (L->First == L->Act) {
         L->Act = NULL;
     }
 
+    /* if there is only one element in list, pointer to Last must be also updated */
     if (L->First == L->Last) {
         L->Last = NULL;
     }
 
+    /* connect list properly */
     tDLElemPtr tmp = L->First;
     L->First = tmp->rptr;
 
@@ -226,6 +237,7 @@ void DLDeleteLast (tDLList *L) {
 ** Zruší poslední prvek seznamu L. Pokud byl poslední prvek aktivní,
 ** aktivita seznamu se ztrácí. Pokud byl seznam L prázdný, nic se neděje.
 **/ 
+    /* same as DLDeleteFirst only reversed */
     if (!L->Last) {
         return;
     }
@@ -315,12 +327,14 @@ void DLPostInsert (tDLList *L, int val) {
         return;
     }
 
+    /* allocate new element */
     tDLElemPtr new = malloc(sizeof(*new));
     if (!new) {
         DLError();
         return;
     }
 
+    /* connect list properly */
     new->data = val;
     new->lptr = L->Act;
     new->rptr = L->Act->rptr;
@@ -347,12 +361,14 @@ void DLPreInsert (tDLList *L, int val) {
         return;
     }
 
+    /* allocate new element */
     tDLElemPtr new = malloc(sizeof(*new));
     if (!new) {
         DLError();
         return;
     }
 
+    /* connect list properly */
     new->data = val;
     new->lptr = L->Act->lptr;
     new->rptr = L->Act;
