@@ -55,11 +55,7 @@ void BSTInit (tBSTNodePtr *RootPtr) {
 ** Proto je třeba při přiřazení přes RootPtr použít dereferenční operátor *.
 ** Ten bude použit i ve funkcích BSTDelete, BSTInsert a BSTDispose.
 **/
-	
-	
-	
-	 solved = FALSE;		  /* V případě řešení smažte tento řádek! */	
-	
+	(*RootPtr) = NULL;
 }	
 
 int BSTSearch (tBSTNodePtr RootPtr, char K, int *Content)	{
@@ -76,11 +72,27 @@ int BSTSearch (tBSTNodePtr RootPtr, char K, int *Content)	{
 ** problém řešte rekurzivním volání této funkce, přičemž nedeklarujte žádnou
 ** pomocnou funkci.
 **/
-							   
-	
+	/* return false if end of tree was reached */
+	if (!RootPtr) {
+		return FALSE;
+	}
 
-	 solved = FALSE;		  /* V případě řešení smažte tento řádek! */	
-	
+	if (RootPtr->Key == K) {
+		*Content = RootPtr->BSTNodeCont;
+		return TRUE;
+	}
+
+	if (RootPtr->Key < K) {
+		if (RootPtr->LPtr) {
+			return BSTSearch(RootPtr->LPtr, K, Content);
+		}
+	} else {
+		if (RootPtr->RPtr) {
+			return BSTSearch(RootPtr->RPtr, K, Content);
+		}
+	}
+
+	return FALSE;
 } 
 
 
@@ -100,11 +112,30 @@ void BSTInsert (tBSTNodePtr* RootPtr, char K, int Content)	{
 ** rychlosti, tak z hlediska paměťových nároků. Zde jde ale o školní
 ** příklad, na kterém si chceme ukázat eleganci rekurzivního zápisu.
 **/
-		
-	
-	
-	 solved = FALSE;		  /* V případě řešení smažte tento řádek! */	
-	
+	/* if end of list was reached, allocate and isnert new node */
+	if (!(*RootPtr)) {
+		*RootPtr = malloc(sizeof(**RootPtr));
+		if (!(*RootPtr)) {
+			return;
+		}
+		(*RootPtr)->RPtr = NULL;
+		(*RootPtr)->LPtr = NULL;
+		(*RootPtr)->Key = K;
+		(*RootPtr)->BSTNodeCont = Content;
+		return;
+	}
+	/* if current key is same as K, just replace content */
+	if ((*RootPtr)->Key == K) {
+		(*RootPtr)->BSTNodeCont = Content;
+	/* if K is lower than current Key, search in left subtree */
+	} else if ((*RootPtr)->Key > K) {
+		/* we have to go deeper */
+		BSTInsert(&((*RootPtr)->LPtr), K, Content);
+	/* if K is lower than current Key, search in right subtree */
+	} else if ((*RootPtr)->Key < K) {
+		/* we have to go deeper */
+		BSTInsert(&((*RootPtr)->RPtr), K, Content);
+	}
 }
 
 void ReplaceByRightmost (tBSTNodePtr PtrReplaced, tBSTNodePtr *RootPtr) {
