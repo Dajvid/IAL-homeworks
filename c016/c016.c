@@ -66,8 +66,9 @@ int hashCode ( tKey key ) {
 */
 
 void htInit ( tHTable* ptrht ) {
-
- solved = 0; /*v pripade reseni, smazte tento radek!*/
+	for(int i = 0; i < HTSIZE; i++) {
+		(*ptrht)[i] = NULL;
+	}
 }
 
 /* TRP s explicitně zřetězenými synonymy.
@@ -78,8 +79,16 @@ void htInit ( tHTable* ptrht ) {
 */
 
 tHTItem* htSearch ( tHTable* ptrht, tKey key ) {
+	tHTItem *iter = (*ptrht)[hashCode(key)];
 
- solved = 0; /*v pripade reseni, smazte tento radek!*/
+	while(iter) {
+		if (iter->key == key) {
+			break;
+		}
+		iter = iter->ptrnext;
+	}
+
+	return iter;
 }
 
 /* 
@@ -95,8 +104,22 @@ tHTItem* htSearch ( tHTable* ptrht, tKey key ) {
 **/
 
 void htInsert ( tHTable* ptrht, tKey key, tData data ) {
+	tHTItem *found;
 
- solved = 0; /*v pripade reseni, smazte tento radek!*/
+	if ((found = htSearch(ptrht, key))) {
+		found->data = data;
+	} else {
+		tHTItem *new;
+		tHTItem **first = &((*ptrht)[hashCode(key)]);
+		new = malloc(sizeof(*new));
+		if (!new) {
+			return;
+		}
+		new->key = key;
+		new->ptrnext = *first;
+		new->data = data;
+		*first = new;
+	}
 }
 
 /*
@@ -109,8 +132,14 @@ void htInsert ( tHTable* ptrht, tKey key, tData data ) {
 */
 
 tData* htRead ( tHTable* ptrht, tKey key ) {
+	tHTItem *found;
+	tData *ret = NULL;
 
- solved = 0; /*v pripade reseni, smazte tento radek!*/
+	if ((found = htSearch(ptrht, key))) {
+		ret = &(found->data);
+	}
+
+	return ret;
 }
 
 /*
@@ -124,8 +153,22 @@ tData* htRead ( tHTable* ptrht, tKey key ) {
 */
 
 void htDelete ( tHTable* ptrht, tKey key ) {
+	tHTItem *last = NULL;
+	tHTItem *iter = (*ptrht)[hashCode(key)];
 
- solved = 0; /*v pripade reseni, smazte tento radek!*/
+	while(iter) {
+		if ((iter)->key == key) {
+			if (last) {
+				last->ptrnext = (iter)->ptrnext;
+			} else {
+				(*ptrht)[hashCode(key)] = (iter)->ptrnext;
+			}
+			free(iter);
+			return;
+		}
+		last = iter;
+		iter = iter->ptrnext;
+	}
 }
 
 /* TRP s explicitně zřetězenými synonymy.
@@ -134,6 +177,15 @@ void htDelete ( tHTable* ptrht, tKey key ) {
 */
 
 void htClearAll ( tHTable* ptrht ) {
+	tHTItem *iter = NULL, *tmp = NULL;
 
- solved = 0; /*v pripade reseni, smazte tento radek!*/
+	for(int i = 0; i < HTSIZE; i++) {
+		iter = (*ptrht)[i];
+		(*ptrht)[i] = NULL;
+		while(iter) {
+			tmp = iter;
+			iter = iter->ptrnext;
+			free(tmp);
+		}
+	}
 }
