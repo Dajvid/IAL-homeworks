@@ -82,17 +82,11 @@ int BSTSearch (tBSTNodePtr RootPtr, char K, int *Content)	{
 		return TRUE;
 	}
 
-	if (RootPtr->Key < K) {
-		if (RootPtr->LPtr) {
-			return BSTSearch(RootPtr->LPtr, K, Content);
-		}
+	if (RootPtr->Key > K) {
+		return BSTSearch(RootPtr->LPtr, K, Content);
 	} else {
-		if (RootPtr->RPtr) {
-			return BSTSearch(RootPtr->RPtr, K, Content);
-		}
+		return BSTSearch(RootPtr->RPtr, K, Content);
 	}
-
-	return FALSE;
 } 
 
 
@@ -150,11 +144,23 @@ void ReplaceByRightmost (tBSTNodePtr PtrReplaced, tBSTNodePtr *RootPtr) {
 ** Tato pomocná funkce bude použita dále. Než ji začnete implementovat,
 ** přečtěte si komentář k funkci BSTDelete(). 
 **/
-	
-	
-		
-	 solved = FALSE;		  /* V případě řešení smažte tento řádek! */	
-	
+	tBSTNodePtr tmp = NULL;
+
+	/* find the most right node in current subtree */
+	if ((*RootPtr)->RPtr) {
+		ReplaceByRightmost(PtrReplaced, &((*RootPtr)->RPtr));
+		return;
+	}
+
+	PtrReplaced->BSTNodeCont = (*RootPtr)->BSTNodeCont;
+	PtrReplaced->Key = (*RootPtr)->Key;
+
+	if (PtrReplaced->LPtr->Key == (*RootPtr)->Key) {
+		tmp = (*RootPtr)->LPtr;
+	}
+
+	free(*RootPtr);
+	(*RootPtr) = tmp;
 }
 
 void BSTDelete (tBSTNodePtr *RootPtr, char K) 		{
@@ -169,11 +175,28 @@ void BSTDelete (tBSTNodePtr *RootPtr, char K) 		{
 ** Tuto funkci implementujte rekurzivně s využitím dříve deklarované
 ** pomocné funkce ReplaceByRightmost.
 **/
-	
-	
-	
-	 solved = FALSE;		  /* V případě řešení smažte tento řádek! */	
+	if (!(*RootPtr)) {
+		return;
+	}
 
+	/* recursive search for node with key K */
+	if ((*RootPtr)->Key < K ) {
+		BSTDelete(&((*RootPtr)->RPtr), K);
+	} else if ((*RootPtr)->Key > K) {
+		BSTDelete(&((*RootPtr)->LPtr), K);
+	/* delete node and connect tree */
+	} else {
+		tBSTNodePtr del = (*RootPtr);
+		if (!(*RootPtr)->LPtr) {
+			(*RootPtr) = del->RPtr;
+			free(del);
+		} else if (!(*RootPtr)->RPtr) {
+			(*RootPtr) = del->LPtr;
+			free(del);
+		} else {
+			ReplaceByRightmost(del, &(*RootPtr)->LPtr);
+		}
+	}
 } 
 
 void BSTDispose (tBSTNodePtr *RootPtr) {	
@@ -184,10 +207,14 @@ void BSTDispose (tBSTNodePtr *RootPtr) {
 ** inicializaci. Tuto funkci implementujte rekurzivně bez deklarování pomocné
 ** funkce.
 **/
-	
+	if (!(*RootPtr)) {
+		return;
+	}
 
-	 solved = FALSE;		  /* V případě řešení smažte tento řádek! */	
-
+	BSTDispose(&(*RootPtr)->LPtr);
+	BSTDispose(&(*RootPtr)->RPtr);
+	free((*RootPtr));
+	(*RootPtr) = NULL;
 }
 
 /* konec c401.c */
